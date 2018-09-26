@@ -1,14 +1,14 @@
 {
   "name": "zju-jwb",
   "version": "0.0.1",
-  "description": "",
+  "description": "A npm library to access http://jwbinfosys.zju.edu.cn and retrieve data programmatically.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["zju", "html", "autobot"],
+  "author": "std4453 <me@std4453.com> (https://std4453.com)",
+  "license": "MIT",
   "dependencies": {
     "big-integer": "^1.6.36",
     "cheerio": "^1.0.0-rc.2",
