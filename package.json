@@ -13,6 +13,8 @@
     "autobot"
   ],
   "author": "std4453 <me@std4453.com> (https://std4453.com)",
+  "homepage": "https://github.com/std4453/zju-jwb",
+  "repository": "github:std4453/zju-jwb",
   "license": "MIT",
   "dependencies": {
     "big-integer": "^1.6.36",
