@@ -12,11 +12,9 @@
   "dependencies": {
     "big-integer": "^1.6.36",
     "cheerio": "^1.0.0-rc.2",
-    "dotenv": "^6.0.0",
     "encoding": "^0.1.12",
     "node-fetch": "^2.2.0",
     "set-cookie-parser": "^2.2.1",
-    "tough-cookie": "^2.4.3",
     "urlencode": "^1.1.0"
   }
 }
