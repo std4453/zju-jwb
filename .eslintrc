@@ -6,6 +6,8 @@
         "function-paren-newline": "off",
         "object-curly-newline": "off",
         "no-restricted-syntax": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-param-reassign": "off",
+        "no-plusplus": "off"
     }
 }
