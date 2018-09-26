@@ -1,16 +1,20 @@
-require('dotenv').config();
-
 const getin = require('./getin');
 const { getSyllabus } = require('./src/syllabus');
 
-const username = process.env.USER, password = process.env.PASSWORD;
+function ZjuJwb(username, password) {
+    this.loggedIn = false;
+    this.username = username;
+    this.password = password;
+}
 
-(async () => {
-    try {
-        const session = await getin(username, password);
-        const syllabus = await getSyllabus(username, session);
-        console.log(syllabus);
-    } catch (e) {
-        console.error(e);
-    }
-})();
+ZjuJwb.prototype.login = async function() {
+    this.session = await getin(this.username, this.password);
+    this.logginIn = true;
+}
+
+ZjuJwb.prototype.getSyllabus = async function() {
+    if (!this.logginIn) throw new Error("Not logged in!");
+    return await getSyllabus(this.username, this.session);
+}
+
+module.exports = ZjuJwb;
