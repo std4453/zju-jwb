@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "description": "A npm library to access http://jwbinfosys.zju.edu.cn and retrieve data programmatically.",
   "main": "index.js",
-  "bin": "server.js",
+  "bin": "bin/zju-jwb.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/**/*.js",
-    "serve": "node server.js"
+    "serve": "node bin/zju-jwb.js"
   },
   "keywords": [
     "zju",
@@ -23,16 +22,16 @@
     "cheerio": "^1.0.0-rc.2",
     "debug": "^4.0.1",
     "encoding": "^0.1.12",
+    "koa": "^2.5.3",
+    "koa-bodyparser": "^4.2.1",
+    "minimist": "^1.2.0",
     "node-fetch": "^2.2.0",
     "set-cookie-parser": "^2.2.1",
     "urlencode": "^1.1.0"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0",
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "koa": "^2.5.3",
-    "koa-bodyparser": "^4.2.1"
+    "eslint-plugin-import": "^2.14.0"
   }
 }
