@@ -124,6 +124,31 @@ const parseSyllabus = (text, username) => {
     return syllabus;
 };
 
+const simplifySyllabus = (syllabus) => {
+    for (const lecture of syllabus) {
+        lecture.lessons.sort((l1, l2) => {
+            // lessons of single weeks first
+            if (l1.weekType !== l2.weekType) return l1.weekType === 'single' ? -1 : 1;
+            if (l1.weekDay !== l2.weekDay) return l1.weekDay - l2.weekDay;
+            return l1.start - l2.start; // earlier lessons first
+        });
+        /* eslint-disable no-continue */
+        for (let i = 0; i < lecture.lessons.length - 1; ++i) {
+            const l1 = lecture.lessons[i];
+            const l2 = lecture.lessons[i + 1];
+            if (l1.weekType !== l2.weekType) continue;
+            if (l1.weekDay !== l2.weekDay) continue;
+            if (l1.location !== l2.location) continue;
+            if (l1.end !== l2.start) continue;
+            l1.end = l2.end;
+            lecture.lessons.splice(i + 1, 1);
+            --i; // so that i remains unchanged after ++i;
+        }
+        /* eslint-enable no-continue */
+    }
+    return syllabus;
+}
+
 const getSyllabus = async (username, session) => {
     const context = { cookies: session, username, action: 'xskbcx', params: {}, viewState: '' };
     await startSyllabus(context);
@@ -135,7 +160,7 @@ const getSyllabus = async (username, session) => {
             log(`Parsing syllabus for the ${key} semester...`);
             // eslint-disable-next-line no-await-in-loop
             const text = key === 'autumn' ? autumnText : await changeField(context, 'xqd', 'xqd', semesters[key]);
-            syllabus[key] = parseSyllabus(text, username);
+            syllabus[key] = simplifySyllabus(parseSyllabus(text, username));
         }
     }
 
