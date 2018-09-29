@@ -91,8 +91,8 @@ const parseSyllabus = (text, username) => {
                 return;
             }
 
-            const col = parseInt($(td).attr('colspan'), 10);
-            const row = parseInt($(td).attr('rowspan'), 10);
+            const col = parseInt($(td).attr('colspan') || '1', 10);
+            const row = parseInt($(td).attr('rowspan') || '1', 10);
             for (let i = 0; i < row; ++i) {
                 for (let j = 0; j < col; ++j) table[y + i][x + j] = true;
             }
@@ -106,7 +106,7 @@ const parseSyllabus = (text, username) => {
                 lectures[lecture] = { name, teacher, lessons: [] };
             }
             for (let i = x; i < x + col; ++i) {
-                const weekDay = i / 2;
+                const weekDay = ~~(i / 2); // eslint-disable-line no-bitwise
                 const weekType = i % 2 === 0 ? 'even' : 'odd';
                 lectures[lecture].lessons.push({
                     weekDay, weekType, start: y, end: y + row, location,

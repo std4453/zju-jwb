@@ -54,13 +54,13 @@ const submitCredentials = async (context, service, encoded, execution) => {
     context.cookies = [...context.cookies, ...parseCookies(headers)];
     if (status !== 302) throw new Error('Submitted credentials rejected!');
     console.log('Logged into zjuam.zju.edu.cn.');
-    
+
     return headers.get('Location');
 };
 
 const login = async (service, username, password) => {
     const context = { cookies: [], username, password };
-    const execution = await startSession(service, context);
+    const execution = await startSession(context, service);
     const encoded = await calcRSA(context);
     const redirect = await submitCredentials(context, service, encoded, execution);
     const cookies = context.cookies.filter(({ name }) => name !== '_pm0' && name !== 'CASPRIVACY' && name !== 'JSESSIONID');
