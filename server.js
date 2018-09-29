@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 /**
  * A server running zju-jwb as a microservice using Koa.js.
- * 
+ *
  * To use this server, first you should build an .env file
  * in the root directory of the zju-jwb package according
  * to the sample.env file.
