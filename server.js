@@ -8,7 +8,7 @@ const ZjuJwb = require('./index');
 
 const app = new Koa();
 const actions = ['getSyllabus'];
-const port = parseInt(process.env.PORT, 10);
+const port = parseInt(process.env.SERVER_PORT, 10);
 
 app.use(async (ctx, next) => {
     await next();
