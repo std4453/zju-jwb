@@ -1,6 +1,7 @@
 const { URLSearchParams } = require('url');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
+const log = require('debug')('zju-jwb/login');
 const { parseCookies, serializeCookies } = require('./utils/cookie');
 const encode = require('./utils/encode');
 
@@ -12,13 +13,13 @@ const startSession = async (context, service) => {
     if (context.cookies.filter(({ name }) => name === 'JSESSIONID').length === 0) {
         throw new Error('Unable to start session with zjuam.zju.edu.cn!');
     }
-    console.log('Session with zjuam.zju.edu.cn started.');
+    log('Session with zjuam.zju.edu.cn started.');
 
     const text = await response.text();
     const $ = cheerio.load(text);
     const execution = $('input[name="execution"]').attr('value');
     if (typeof execution === 'undefined') throw new Error('Unable to obtain "execution" string!');
-    console.log('Obtained "execution" string from fetched page.');
+    log('Obtained "execution" string from fetched page.');
 
     return execution;
 };
@@ -30,10 +31,10 @@ const calcRSA = async (context) => {
     context.cookies = [...context.cookies, ...parseCookies(response.headers)];
 
     const { modulus, exponent } = await response.json();
-    console.log('Obtained RSA public key from server.');
+    log('Obtained RSA public key from server.');
 
     const encoded = encode(context.password, modulus, exponent);
-    console.log('Encoded password with RSA public key.');
+    log('Encoded password with RSA public key.');
     return encoded;
 };
 
@@ -53,7 +54,7 @@ const submitCredentials = async (context, service, encoded, execution) => {
     });
     context.cookies = [...context.cookies, ...parseCookies(headers)];
     if (status !== 302) throw new Error('Submitted credentials rejected!');
-    console.log('Logged into zjuam.zju.edu.cn.');
+    log('Logged into zjuam.zju.edu.cn.');
 
     return headers.get('Location');
 };
@@ -66,7 +67,7 @@ const login = async (service, username, password) => {
     const cookies = context.cookies.filter(({ name }) => name !== '_pm0' && name !== 'CASPRIVACY' && name !== 'JSESSIONID');
 
     if (typeof redirect === 'undefined') throw new Error('Unable to obtain redirect link!');
-    console.log(`Redirecting to ${redirect}`);
+    log(`Redirecting to ${redirect}`);
     return { redirect, cookies };
 };
 

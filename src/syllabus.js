@@ -2,7 +2,9 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const { URLSearchParams } = require('url');
 const urlencode = require('urlencode');
+const log = require('debug')('zju-jwb/syllabus');
 const { serializeCookies } = require('./utils/cookie');
+
 
 const shouldEncode = key => key === 'xqd' || key === 'xxms';
 const encodeGBKForm = params => Array.from(params
@@ -130,7 +132,7 @@ const getSyllabus = async (username, session) => {
     const syllabus = {};
     for (const key in semesters) {
         if ({}.hasOwnProperty.call(semesters, key)) {
-            console.log(`Parsing syllabus for the ${key} semester...`);
+            log(`Parsing syllabus for the ${key} semester...`);
             // eslint-disable-next-line no-await-in-loop
             const text = key === 'autumn' ? autumnText : await changeField(context, 'xqd', 'xqd', semesters[key]);
             syllabus[key] = parseSyllabus(text, username);

@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const log = require('debug')('zju-jwb/getin');
 const { parseCookies, serializeCookies } = require('./utils/cookie');
 const login = require('./login');
 
@@ -10,7 +11,7 @@ const startSession = async (context) => {
     if (context.cookies.filter(({ name }) => name === 'ASP.NET_SessionId').length === 0) {
         throw new Error('Unable to start session with jwbinfosys.zju.edu.cn!');
     }
-    console.log('Session with jwbinfosys.zju.edu.cn started.');
+    log('Session with jwbinfosys.zju.edu.cn started.');
 };
 
 const followRedirect = async (context, redirect) => {
@@ -18,7 +19,7 @@ const followRedirect = async (context, redirect) => {
         headers: [['Cookie', serializeCookies(context.cookies)]],
     });
     context.cookies = [...context.cookies, ...parseCookies(headers)];
-    console.log(`Redirected to ${redirect}.`);
+    log(`Redirected to ${redirect}.`);
 };
 
 const getinDefault2 = async (context) => {
@@ -26,7 +27,7 @@ const getinDefault2 = async (context) => {
         headers: [['Cookie', serializeCookies(context.cookies)]],
     });
     context.cookies = [...context.cookies, ...parseCookies(headers)];
-    console.log('Fetched default2.aspx and obtained system access.');
+    log('Fetched default2.aspx and obtained system access.');
 };
 
 const getin = async (username, password) => {
@@ -36,7 +37,7 @@ const getin = async (username, password) => {
     context.cookies = [...context.cookies, ...cookies];
     await followRedirect(context, redirect);
     await getinDefault2(context);
-    console.log('jwbinfosys.zju.edu.cn ready!');
+    log('jwbinfosys.zju.edu.cn ready!');
 
     return context.cookies.filter(({ name }) => name === 'ASP.NET_SessionId');
 };
