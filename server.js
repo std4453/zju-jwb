@@ -1,3 +1,30 @@
+/**
+ * A server running zju-jwb as a microservice using Koa.js.
+ * 
+ * To use this server, first you should build an .env file
+ * in the root directory of the zju-jwb package according
+ * to the sample.env file.
+ * Second, for all available services, access them as follows:
+ *
+ * POST http://your_server_location:your_server_port/service_name
+ * Content-Type: application/x-www-form-urlencoded
+ * username=XXXXX&password=XXXXX
+ *
+ * Third, start the server with npm run serve.
+ *
+ * The services returns a JSON as response, in format as follows:
+ * {
+ *     action: <service_name>,
+ *     error: false | true,
+ *     errorMsg?: <message_of_error>,
+ *     result?: <service_response>
+ * }
+ * Where errorMsg will only be available whtn error is true, and
+ * result when error is false.
+ * The value of result will be the JSON returned by the required
+ * service.
+ */
+
 /* eslint-disable import/no-extraneous-dependencies */
 require('dotenv').config();
 
